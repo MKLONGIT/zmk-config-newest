@@ -1,0 +1,22 @@
+identifier: nrfNicht/nrf52840
+name: nrfNicht
+type: mcu
+arch: arm
+ram: 256
+flash: 1024
+toolchain:
+  - zephyr
+  - gnuarmemb
+supported:
+  - adc
+  - bluetooth
+  - counter
+  - gpio
+  - i2c
+  - i2s
+  - ieee802154
+  - pwm
+  - spi
+  - usb_device
+  - watchdog
+  - netif:openthread

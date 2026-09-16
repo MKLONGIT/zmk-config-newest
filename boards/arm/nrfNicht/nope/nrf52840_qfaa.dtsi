@@ -1,0 +1,4 @@
+#include <mem.h>
+#include <nordic/nrf52840.dtsi>
+
+/delete-node/ &usbd;

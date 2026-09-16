@@ -1,0 +1,8 @@
+board:
+  name: nrfNicht
+  full_name: nrfNicht
+  vendor: mkl
+  socs:
+  - name: nrf52840
+    variants:
+    - name: zmk
