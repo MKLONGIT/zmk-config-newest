@@ -4,6 +4,10 @@ type: mcu
 arch: arm
 ram: 256
 flash: 1024
+soc:
+  - name: nrf52840
+    variants:
+      - qiaa
 toolchain:
   - zephyr
   - gnuarmemb
