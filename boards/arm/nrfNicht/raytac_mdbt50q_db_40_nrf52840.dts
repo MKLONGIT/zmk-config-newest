@@ -1,14 +1,18 @@
+/*
+ * Copyright (c) 2022 Raytac Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /dts-v1/;
 #include <nordic/nrf52840_qiaa.dtsi>
+#include <nordic/nrf52840_partition.dtsi>
+#include "raytac_mdbt50q_db_40_nrf52840-pinctrl.dtsi"
 #include <zephyr/dt-bindings/input/input-event-codes.h>
-#include "nrfNicht_nrf52840-pinctrl.dtsi"
-#include <dt-bindings/led/led.h>
-#include "nrf52840_partition.dtsi"
 
 / {
-	model = "MDBT50Q-P1MV2_nRF52840 (nrfNicht)";
-	compatible = "mkl,nrfNicht";
+	model = "Raytac MDBT50Q-DB-40_nRF52840";
+	compatible = "raytac,raytac-mdbt50q-db-40-nrf52840";
 
 	chosen {
 		zephyr,console = &uart0;
@@ -19,77 +23,83 @@
 		zephyr,ieee802154 = &ieee802154;
 	};
 
+	leds {
+		compatible = "gpio-leds";
+
+		led0: led_0 {
+			gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
+			label = "Green LED 0";
+		};
+
+		led1: led_1 {
+			gpios = <&gpio0 14 GPIO_ACTIVE_LOW>;
+			label = "Red LED 1";
+		};
+
+		led2: led_2 {
+			gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
+			label = "Blue LED 2";
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+
+		pwm_led0: pwm_led_0 {
+			pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_INVERTED>;
+		};
+	};
+
 	buttons {
 		compatible = "gpio-keys";
 
 		button0: button_0 {
-			gpios = <&gpio0 18 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-			label = "nRESET";
+			gpios = <&gpio0 11 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 0";
 			zephyr,code = <INPUT_KEY_0>;
 		};
 
-		button1: button_1{
-			gpios = <&gpio0 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-			label = "nCHG";
+		button1: button_1 {
+			gpios = <&gpio0 12 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 1";
 			zephyr,code = <INPUT_KEY_1>;
 		};
-		button2: button_2{
-			gpios = <&gpio0 8 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-			label = "nPGOOD";
+
+		button2: button_2 {
+			gpios = <&gpio0 24 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 2";
 			zephyr,code = <INPUT_KEY_2>;
 		};
-		button3: button_3{
-			gpios = <&gpio1 8 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-			label = "nALERT";
+
+		button3: button_3 {
+			gpios = <&gpio0 25 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 3";
 			zephyr,code = <INPUT_KEY_3>;
 		};
 	};
 
 	/* These aliases are provided for compatibility with samples */
 	aliases {
+		led0 = &led0;
+		led1 = &led1;
+		led2 = &led2;
+		pwm-led0 = &pwm_led0;
+		sw0 = &button0;
+		sw1 = &button1;
+		sw2 = &button2;
+		sw3 = &button3;
 		mcuboot-button0 = &button0;
+		mcuboot-led0 = &led0;
 		watchdog0 = &wdt0;
 	};
 };
 
-&pinctrl {
-	spi3_default: spi3_default {
-		group1 {
-		psels = <NRF_PSEL(SPIM_MOSI, 0, 25)>;
-		};
-	};
-
-	spi3_sleep: spi3_sleep {
-		group1 {
-		psels = <NRF_PSEL(SPIM_MOSI, 0, 25)>;
-		low-power-enable;
-		};
-	};
+&reg0 {
+	status = "okay";
 };
 
-&spi3 {
-	compatible = "nordic,nrf-spim";
-	status = "okay";
-
-	pinctrl-0 = <&spi3_default>;
-	pinctrl-1 = <&spi3_sleep>;
-	pinctrl-names = "default", "sleep";
-
-	led_strip: ws2812@0 {
-		compatible = "worldsemi,ws2812-spi";
-
-		/* SPI */
-		reg = <0>; /* ignored, but necessary for SPI bindings */
-		spi-max-frequency = <4000000>;
-
-		/* WS2812 */
-		chain-length = <10>; /* number of LEDs */
-		spi-one-frame = <0x70>;
-		spi-zero-frame = <0x40>;
-		color-mapping = <LED_COLOR_ID_GREEN
-				LED_COLOR_ID_RED
-				LED_COLOR_ID_BLUE>;
-	};
+&reg1 {
+	regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
 };
 
 &adc {

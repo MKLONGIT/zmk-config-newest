@@ -1,13 +1,14 @@
-identifier: nrfNicht/nrf52840
-name: NRFNICHT
+# Raytac MDBT50Q_DB_40_NRF52840 board configuration
+
+# Copyright (c) 2022 Raytac Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+identifier: raytac_mdbt50q_db_40/nrf52840
+name: Raytac MDBT50Q_DB_40_NRF52840
 type: mcu
 arch: arm
 ram: 256
 flash: 1024
-soc:
-  - name: nrf52840
-    variants:
-      - qiaa
 toolchain:
   - zephyr
   - gnuarmemb

@@ -1,3 +1,8 @@
-if BOARD_NRFNICHT
+# Raytac MDBT50Q-DB-40 NRF52840 board configuration
 
-endif # BOARD_NRFNICHT
+# Copyright (c) 2022 Raytac Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_RAYTAC_MDBT50Q_DB_40
+
+endif # BOARD_RAYTAC_MDBT50Q_DB_40

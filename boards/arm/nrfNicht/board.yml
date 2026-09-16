@@ -1,8 +1,6 @@
 board:
-  name: nrfNicht
-  full_name: nrfNicht
-  vendor: mkl
+  name: raytac_mdbt50q_db_40
+  full_name: MDBT50Q-DB-40
+  vendor: raytac
   socs:
   - name: nrf52840
-    variants:
-    - name: zmk
