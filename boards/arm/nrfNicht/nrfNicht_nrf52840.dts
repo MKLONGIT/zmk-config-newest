@@ -4,7 +4,7 @@
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 #include "nrfNicht_nrf52840-pinctrl.dtsi"
 #include <dt-bindings/led/led.h>
-#include <nordic/nrf52840_partition.dtsi>
+#include "nrf52840_partition.dtsi"
 
 / {
 	model = "MDBT50Q-P1MV2_nRF52840 (nrfNicht)";
