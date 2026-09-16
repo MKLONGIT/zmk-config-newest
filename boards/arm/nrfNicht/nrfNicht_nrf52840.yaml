@@ -1,5 +1,5 @@
 identifier: nrfNicht/nrf52840
-name: nrfNicht
+name: NRFNICHT
 type: mcu
 arch: arm
 ram: 256
